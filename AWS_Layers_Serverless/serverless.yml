@@ -1,0 +1,28 @@
+org: swapnilkumarrai07
+app: awslambda
+service: awslambda
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  profile: swapnil
+  lambdaHashingVersion: 20201221
+
+  stage: dev
+  region: ap-south-1
+
+functions:
+  hello:
+    handler: handler.hello
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    layer: 
+      name: python-numpy
+      description: Layer whi...py library
+
+plugins:
+  - serverless-python-requirements

@@ -1,0 +1,31 @@
+service: AwsPythonServerless
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  profile: swapnil
+
+  stage: dev
+  region: ap-south-1
+
+functions:
+  hello:
+    handler: handler.hello
+
+resources:
+  Resources:
+    DemoBucketUpload:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: awspythonserverlessbucket-10
+
+custom:
+    s3Sync:
+        - bucketName: awspythonserverlessbucket-10
+          localDir: upload_data
+
+plugins:
+  # - serverless-python-requirements
+  - serverless-s3-sync
