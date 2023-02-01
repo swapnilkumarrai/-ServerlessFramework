@@ -1,0 +1,70 @@
+import re
+import os
+import json
+import boto3
+import datetime
+import uuid
+from datetime import datetime
+import json
+
+
+
+class Secrets:
+    def __init__(self):
+        self.AWS_ACCESS_KEY = "AKIA35ZWQV6NIRBYULUO"
+        self.AWS_SECRET_KEY = "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"
+        self.AWS_REGION_NAME = "ap-south-1"
+        self.EventBusName = 'arn:aws:events:ap-south-1:819916222362:event-bus/my-event-bus'
+
+class AWSEventBus(Secrets):
+
+    """Helper class to which add functionality on top of boto3 """
+
+    def __init__(self, **kwargs):
+        Secrets.__init__(
+            self
+        )
+        self.client = boto3.client(
+            "events",
+            aws_access_key_id=self.AWS_ACCESS_KEY,
+            aws_secret_access_key=self.AWS_SECRET_KEY,
+            region_name=self.AWS_REGION_NAME,
+        )
+
+    def send_events(self, json_message, DetailType, Source):
+        response = self.client.put_events(
+            Entries=[
+                {
+                    'Time': datetime.now(),
+                    'Source': Source,
+                    'Resources': [],
+                    'DetailType': DetailType,
+                    'Detail':json.dumps(json_message) ,
+                    'EventBusName': self.EventBusName,
+
+
+                },
+            ]
+        )
+        return response
+
+def main():
+    """"
+    {
+	"detail":{
+    	"status":["new order"]
+    }
+    }
+    """
+    json_data = {
+        "status":"new order",
+        "message":"Swapnil bought new product 1234",
+        "language":["Python", "aws"]
+    }
+    helper = AWSEventBus()
+    message = helper.send_events(json_message=json_data,
+                                 DetailType='MyEvent',
+                                 Source="MyProducer")
+    print(message)
+
+main()

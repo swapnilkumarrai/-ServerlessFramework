@@ -1,0 +1,27 @@
+org: swapnilkumarrai07
+app: awslambda
+console: true
+service: aws-event-bus
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  profile: swapnil
+
+  stage: dev
+  region: ap-south-1
+
+
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - eventBridge:
+          eventBus: arn:aws:events:ap-south-1:819916222362:event-bus/my-event-bus
+          pattern:
+            version:
+              - "0"
+
