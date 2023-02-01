@@ -1,0 +1,34 @@
+service: sls-pandas-py
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  profile: swapnil
+
+  stage: dev
+  region: us-east-1
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    zip: true
+
+package: 
+  # exclude everything..
+  exclude:
+    - '**/*'
+  # include - we have to explicitly list packages with native dependencies.
+  include:
+    - '*.py'
+    - 'pandas'
+
+functions:
+  hello:
+    handler: handler.hello
+
+
