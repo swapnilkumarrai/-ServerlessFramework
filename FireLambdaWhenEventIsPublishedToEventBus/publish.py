@@ -11,10 +11,10 @@ import json
 
 class Secrets:
     def __init__(self):
-        self.AWS_ACCESS_KEY = "AKIA35ZWQV6NIRBYULUO"
-        self.AWS_SECRET_KEY = "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"
+        self.AWS_ACCESS_KEY = "*********"
+        self.AWS_SECRET_KEY = "********"
         self.AWS_REGION_NAME = "ap-south-1"
-        self.EventBusName = 'arn:aws:events:ap-south-1:819916222362:event-bus/my-event-bus'
+        self.EventBusName = '********'
 
 class AWSEventBus(Secrets):
 
